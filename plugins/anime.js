@@ -4,7 +4,7 @@ import he from 'he';
 
 Module({
   command: 'anime',
-  package: 'info',
+  package: 'fun',
   description: 'Get anime info from Anilist'
 })(async (message, match) => {
   if (!match) return message.send('usage: anime <name>');
@@ -40,7 +40,7 @@ Module({
 
 Module({
   command: 'character',
-  package: 'info',
+  package: 'fun',
   description: 'Get anime character info from Anilist'
 })(async (message, match) => {
   if (!match) return message.send('usage: character <name>');
@@ -75,7 +75,7 @@ Module({
 
 Module({
   command: 'manga',
-  package: 'info',
+  package: 'fun',
   description: 'Get manga info from Anilist'
 })(async (message, match) => {
   if (!match) return message.send('usage: manga <name>');
@@ -110,7 +110,7 @@ Module({
 });
 Module({
   command: "quote",
-  package: "anime",
+  package: "fun",
   description: "Get a random anime quote",
 })(async (message, match) => {
   try {
