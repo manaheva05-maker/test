@@ -3,7 +3,7 @@ import Translator from '../lib/Class/translate.js';
 
 Module({
   command: "trt",
-  package: "mics",
+  package: "tools",
   description: "Translate text to any language",
 })(async (message, match) => {
   if (!match)
