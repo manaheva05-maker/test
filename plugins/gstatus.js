@@ -14,7 +14,7 @@ Module({
   try {
     // 🔹 Load config (CLEAN)
     const settings = await getSettings();
-    const botname = settings?.botname || "MR R4BBIT";
+    const botname = settings?.botname || "𝙼𝙸𝙽𝙸 𝙸𝙽𝙲𝙾𝙽𝙽𝚄 𝚇𝙳";
 
     // 🔒 Checks
     if (!IsGroup)
