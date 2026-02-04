@@ -209,7 +209,7 @@ async function handleVideoDownload(conn, input, message, resolution = "720p") {
 }
 Module({
   command: "yts",
-  package: "search",
+  package: "downloader",
   description: "Search YouTube videos",
 })(async (message, match) => {
   if (!match) return await message.send("Please provide a search query");
