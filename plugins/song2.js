@@ -89,7 +89,7 @@ async function handleSongDownload(Aliconn, searchQuery, message) {
         contextInfo: {
           externalAdReply: {
             title: title,
-            body: "Pᴏᴡᴇʀᴇᴅ Bʏ Rᴀʙʙɪᴛ Xᴍᴅ",
+            body: "𝙼𝙰𝙳𝙴 𝙸𝙽 𝙱𝚈 𝙸𝙽𝙲𝙾𝙽𝙽𝚄 𝙱𝙾𝚈",
             mediaType: 1,
             sourceUrl: sourceUrl,
           },
