@@ -3,7 +3,7 @@ import axios from 'axios';
 
 Module({
   command: "lyrics",
-  package: "info",
+  package: "downloader",
   description: "Get song lyrics"
 })(async (message, match) => {
   if (!match) return await message.send("_Give me a song title eg Sad by xxxtentacion_");
