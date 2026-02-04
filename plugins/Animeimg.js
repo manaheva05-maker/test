@@ -4,7 +4,7 @@ import { Module } from '../lib/plugins.js';
 // Milf command
 Module({
   command: "milf",
-  package: "anime",
+  package: "fun",
   description: "Download Milf Anime Images"
 })(async (message, match) => {
   try {
@@ -35,7 +35,7 @@ Module({
 // Ero command
 Module({
   command: "ero",
-  package: "anime",
+  package: "fun",
   description: "Download Erotic Anime Images"
 })(async (message, match) => {
   try {
@@ -66,7 +66,7 @@ Module({
 // Ecchi command
 Module({
   command: "ecchi",
-  package: "anime",
+  package: "fun",
   description: "Download Ecchi Anime Images"
 })(async (message, match) => {
   try {
@@ -97,7 +97,7 @@ Module({
 // Ass command
 Module({
   command: "ass",
-  package: "anime",
+  package: "fun",
   description: "Download Ass Anime Images"
 })(async (message, match) => {
   try {
@@ -128,7 +128,7 @@ Module({
 // Random anime command
 Module({
   command: "ranime",
-  package: "anime",
+  package: "fun",
   description: "Download Random Anime Information"
 })(async (message, match) => {
   try {
@@ -162,7 +162,7 @@ Module({
 // Loli command
 Module({
   command: "loli",
-  package: "anime",
+  package: "fun",
   description: "Download Loli Anime Images"
 })(async (message, match) => {
   try {
@@ -193,7 +193,7 @@ Module({
 // Waifu command
 Module({
   command: "waifu",
-  package: "anime",
+  package: "fun",
   description: "Download Waifu Anime Images"
 })(async (message, match) => {
   try {
@@ -224,7 +224,7 @@ Module({
 // Neko command
 Module({
   command: "neko",
-  package: "anime",
+  package: "fun",
   description: "Download Neko Anime Images"
 })(async (message, match) => {
   try {
@@ -255,7 +255,7 @@ Module({
 // Megumin command
 Module({
   command: "megumin",
-  package: "anime",
+  package: "fun",
   description: "Download Megumin Anime Images"
 })(async (message, match) => {
   try {
@@ -286,7 +286,7 @@ Module({
 // Maid command
 Module({
   command: "maid",
-  package: "anime",
+  package: "fun",
   description: "Download Maid Anime Images"
 })(async (message, match) => {
   try {
@@ -317,7 +317,7 @@ Module({
 // Awoo command
 Module({
   command: "awoo",
-  package: "anime",
+  package: "fun",
   description: "Download Awoo Anime Images"
 })(async (message, match) => {
   try {
@@ -348,7 +348,7 @@ Module({
 // Anime Quote command
 Module({
   command: "aquote",
-  package: "anime",
+  package: "fun",
   description: "Get Random Anime Quote"
 })(async (message, match) => {
   try {
@@ -377,7 +377,7 @@ Module({
 // Anime Character Search command
 Module({
   command: "achar",
-  package: "anime",
+  package: "fun",
   description: "Search Anime Character Information"
 })(async (message, match) => {
   try {
@@ -414,7 +414,7 @@ Module({
 // Anime Search command
 Module({
   command: "asearch",
-  package: "anime",
+  package: "fun",
   description: "Search for Anime Information"
 })(async (message, match) => {
   try {
@@ -451,7 +451,7 @@ Module({
 // Anime Recommendations command
 Module({
   command: "arecommend",
-  package: "anime",
+  package: "fun",
   description: "Get Top Anime Recommendations"
 })(async (message, match) => {
   try {
@@ -485,7 +485,7 @@ Module({
 // Shinobu command
 Module({
   command: "shinobu",
-  package: "anime",
+  package: "fun",
   description: "Download Shinobu Anime Images"
 })(async (message, match) => {
   try {
@@ -516,7 +516,7 @@ Module({
 // Cuddle command
 Module({
   command: "cuddle",
-  package: "anime",
+  package: "fun",
   description: "Send Anime Cuddle GIF"
 })(async (message, match) => {
   try {
@@ -548,7 +548,7 @@ Module({
 // Pat command
 Module({
   command: "pat",
-  package: "anime",
+  package: "fun",
   description: "Send Anime Pat GIF"
 })(async (message, match) => {
   try {
