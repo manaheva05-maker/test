@@ -2,7 +2,7 @@ import { Module } from "../lib/plugins.js";
 
 Module({
   command: "ping",
-  package: "misc",
+  package: "general",
   description: "Bot latency",
 })(async (message) => {
   const start = Date.now();
