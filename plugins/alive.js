@@ -1,58 +1,48 @@
 import os from "os";
 import { Module } from "../lib/plugins.js";
-import config from "../config.js";
+
 Module({
   command: "alive",
   package: "general",
-  description: "Check if bot is alive",
+  description: "Check bot status",
 })(async (message) => {
   try {
-    const hostname = os.hostname();
-    // Indian Time
-    const time = new Date().toLocaleTimeString("en-IN", {
-      timeZone: "Asia/Kolkata",
-      hour12: false, // 24-hour format
+    const time = new Date().toLocaleTimeString("en-GB", {
+      hour12: false,
     });
 
-    const ramUsedMB = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+    const ram = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(1);
     const uptime = process.uptime();
-    const hours = Math.floor(uptime / 3600);
-    const minutes = Math.floor((uptime % 3600) / 60);
-    const seconds = Math.floor(uptime % 60);
+    const h = Math.floor(uptime / 3600);
+    const m = Math.floor((uptime % 3600) / 60);
+    const s = Math.floor(uptime % 60);
 
-    const caption = `
-💜🦋💗 𝐁ᴏᴛ 𝐀ʟɪᴠᴇ 💗🦋💜
+    const text = `
+🤖 *BOT STATUS*
 
-🌸 𝐁ᴏᴛ ɴᴀᴍᴇ: 𝐑ᴀʙʙɪᴛ Xᴍᴅ 🌸
-⚡ 𝐓ɪᴍᴇ (IST): ${time}
-🏠 𝐇ᴏsᴛ: 𝐑ᴀʙʙɪᴛ𝐇ᴏsᴛ
-💾 𝐑ᴀᴍ 𝐔sᴀɢᴇ: ${ramUsedMB} MB
-⏱ 𝐔ᴘᴛɪᴍᴇ: ${hours}h ${minutes}m ${seconds}s
+✅ Status : *Alive*
+⏰ Time   : ${time}
+💾 RAM    : ${ram} MB
+⏱ Uptime : ${h}h ${m}m ${s}s
 
-🎀 𝐄ɴᴊᴏʏ ʏᴏᴜʀ ʙᴏᴛ! 🌷🦋💖
-    `.trim();
+✨ Bot is running smoothly
+`.trim();
 
-    const opts = {
-      image: { url: "https://www.rabbit.zone.id/pzf1km.jpg" },
-      caption: caption,
-      mimetype: "image/jpeg",
+    await message.conn.sendMessage(message.from, {
+      text,
       contextInfo: {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-          newsletterJid: "120363404737630340@newsletter",
-          newsletterName: "𝐑ᴀʙʙɪᴛ Xᴍᴅ",
+          newsletterJid: "120363403408693274@newsletter",
+          newsletterName: "𝙼𝙸𝙽𝙸 𝙸𝙽𝙲𝙾𝙽𝙽𝚄 𝚇𝙳",
           serverMessageId: 6,
         },
       },
-    };
-
-    await message.conn.sendMessage(message.from, opts);
-  } catch (err) {
-    console.error("❌ Alive command error:", err);
+    });
+  } catch (e) {
     await message.conn.sendMessage(message.from, {
-      text: `❌ Error: ${err?.message || err}`,
+      text: "❌ Error while checking status",
     });
   }
 });
-  
