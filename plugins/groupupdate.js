@@ -14,8 +14,8 @@ const DEFAULT_GOODBYE = `╭─  *GOODBYE*
 
 ╭───────────────⭓ 
 │ use : &mention
-│ bot : unknown XD 
-│ dev : unknown boy 
+│ bot : inconnu xd
+│ dev : inconnu boy
 │ ᴠᴇʀꜱɪᴏɴ : 2.0.0
 ╰───────────────⭓`;
 
@@ -29,10 +29,13 @@ const DEFAULT_WELCOME = `╭─  *WELCOME*
 
 ╭───────────────⭓ 
 │ use : &mention
-│ bot : unknown XD 
-│ dev : unknown boy 
+│ bot : inconnu xd
+│ dev : inconnu boy 
 │ ᴠᴇʀꜱɪᴏɴ : 2.0.0
 ╰───────────────⭓`;
+
+// URL de l'image par défaut
+const DEFAULT_PROFILE_IMAGE = "https://i.postimg.cc/XvsZgKCb/IMG-20250731-WA0527.jpg";
 
 /* ---------------- helpers ---------------- */
 function toBool(v) {
@@ -94,6 +97,35 @@ async function fetchProfileBuffer(conn, jid) {
   } catch (e) {
     console.error("[groupupdate] fetchProfileBuffer error:", e?.message || e);
     return null;
+  }
+}
+
+async function getDefaultImageBuffer() {
+  try {
+    const res = await axios.get(DEFAULT_PROFILE_IMAGE, {
+      responseType: "arraybuffer",
+      timeout: 20000,
+    });
+    return Buffer.from(res.data);
+  } catch (e) {
+    console.error("[groupupdate] getDefaultImageBuffer error:", e?.message || e);
+    return null;
+  }
+}
+
+async function getParticipantProfile(conn, participantJid) {
+  try {
+    // Essayer d'abord de récupérer la photo de profil du participant
+    const profileBuffer = await fetchProfileBuffer(conn, participantJid);
+    if (profileBuffer) {
+      return profileBuffer;
+    }
+    
+    // Si pas de photo de profil, utiliser l'image par défaut
+    return await getDefaultImageBuffer();
+  } catch (e) {
+    console.error("[groupupdate] getParticipantProfile error:", e?.message || e);
+    return await getDefaultImageBuffer();
   }
 }
 
@@ -161,7 +193,7 @@ Module({
     const botNumber = (message.conn?.user?.id && String(message.conn.user.id).split(":")[0]) || "bot";
     const key = `group:${groupJid}:welcome`;
     const cfg = await db.getAsync(botNumber, key, null);
-    const status = cfg && typeof cfg === "object" ? toBool(cfg.status) : false;
+    const status = cfg && typeof cfg === "object" ? toBool(cfg.status) : true;
     return await message.sendreply?.(`Welcome is ${status ? "✅ ON" : "❌ OFF"} for this group.`);
   }
 
@@ -196,7 +228,7 @@ Module({
     const botNumber = (message.conn?.user?.id && String(message.conn.user.id).split(":")[0]) || "bot";
     const key = `group:${groupJid}:goodbye`;
     const cfg = await db.getAsync(botNumber, key, null);
-    const status = cfg && typeof cfg === "object" ? toBool(cfg.status) : false;
+    const status = cfg && typeof cfg === "object" ? toBool(cfg.status) : true;
     return await message.sendreply?.(`Goodbye is ${status ? "✅ ON" : "❌ OFF"} for this group.`);
   }
 
@@ -267,7 +299,9 @@ Module({ on: "group-participants.update" })(async (_msg, event, conn) => {
         const text = buildText(DEFAULT_WELCOME, replacements);
         
         try {
-          await sendWelcomeMsg(conn, groupJid, text, [participantJid]);
+          // Récupérer la photo de profil du participant (ou image par défaut)
+          const profileBuffer = await getParticipantProfile(conn, participantJid);
+          await sendWelcomeMsg(conn, groupJid, text, [participantJid], profileBuffer);
         } catch (e) {
           console.error("[groupupdate] error sending welcome:", e?.message || e);
         }
@@ -292,7 +326,9 @@ Module({ on: "group-participants.update" })(async (_msg, event, conn) => {
         const text = buildText(DEFAULT_GOODBYE, replacements);
         
         try {
-          await sendWelcomeMsg(conn, groupJid, text, [participantJid]);
+          // Récupérer la photo de profil du participant (ou image par défaut)
+          const profileBuffer = await getParticipantProfile(conn, participantJid);
+          await sendWelcomeMsg(conn, groupJid, text, [participantJid], profileBuffer);
         } catch (e) {
           console.error("[groupupdate] error sending goodbye:", e?.message || e);
         }
