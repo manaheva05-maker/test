@@ -16,6 +16,14 @@ const __dirname = path.dirname(__filename);
 const app = express();
 app.use(bodyParser.json());
 
+// Middleware CORS pour autoriser les requêtes depuis le frontend
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 // ensure sessions dir exists
 const SESSIONS_DIR = path.join(process.cwd(), "sessions");
 await fs.mkdirp(SESSIONS_DIR);
