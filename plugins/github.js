@@ -19,7 +19,7 @@ Module({
 
 Module({
   command: 'github',
-  package: 'stalk',
+  package: 'Tools',
   description: 'GitHub profile info'
 })(async (message, match) => {
   const username = match?.trim();
