@@ -45,7 +45,7 @@ Module({
       caption:
         `🎥 Facebook Video\n` +
         `Quality: ${qp}\n\n` +
-        `𝐏ᴏᴡᴇʀᴇᴅ 𝐁Y  𝐑ᴀʙʙɪᴛ Xᴍᴅ Mɪɴɪ`
+        `𝙼𝙰𝙳𝙴 𝙸𝙽 𝙱𝚈 𝙸𝙽𝙲𝙾𝙽𝙽𝚄 𝙱𝙾𝚈`
     })
 
   } catch (e) {
