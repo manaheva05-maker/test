@@ -2,7 +2,7 @@ import { Module } from '../lib/plugins.js';
 
 Module({
   command: "pair",
-  package: "main",
+  package: "general",
   description: "Instruct user to pair via Telegram Bot with fixed image",
 })(async (message, match) => {
   try {
