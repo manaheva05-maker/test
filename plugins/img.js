@@ -37,7 +37,7 @@ Module({
           image: { url: images[i] },
           caption: `🖼️ *Search:* ${text}\n📊 *Image ${
             i + 1
-          }/${max}*\n> © X-kira`,
+          }/${max}*\n> © 𝙼𝙰𝙳𝙴 𝙸𝙽 𝙱𝚈 𝙸𝙽𝙲𝙾𝙽𝙽𝚄 𝙱𝙾𝚈`,
         });
 
         await new Promise((resolve) => setTimeout(resolve, 2000));
