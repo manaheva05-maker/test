@@ -554,9 +554,9 @@ Module({
 });
 
 Module({
-  command: "subject",
+  command: "setname",
   package: "group",
-  aliases: ["setname", "groupname"],
+  aliases: ["subject", "groupname"],
   description: "Change group name",
   usage: ".subject <new name>",
 })(async (message, match) => {
@@ -587,9 +587,9 @@ Module({
 });
 
 Module({
-  command: "desc",
+  command: "setdesc",
   package: "group",
-  aliases: ["setdesc", "description"],
+  aliases: ["desc", "description"],
   description: "Change group description",
   usage: ".desc <new description>",
 })(async (message, match) => {
@@ -723,9 +723,9 @@ Module({
 });
 
 Module({
-  command: "requests",
+  command: "pending",
   package: "group",
-  aliases: ["joinrequests", "pending"],
+  aliases: ["joinrequests", "requests"],
   description: "View pending join requests",
 })(async (message) => {
   try {
@@ -756,9 +756,9 @@ Module({
 });
 
 Module({
-  command: "approve",
+  command: "acceptall",
   package: "group",
-  aliases: ["acceptall", "approveall"],
+  aliases: ["approve", "approveall"],
   description: "Approve all pending join requests",
 })(async (message) => {
   try {
@@ -785,9 +785,9 @@ Module({
 });
 
 Module({
-  command: "reject",
+  command: "rejectall",
   package: "group",
-  aliases: ["rejectall"],
+  aliases: ["reject"],
   description: "Reject all pending join requests",
 })(async (message) => {
   try {
