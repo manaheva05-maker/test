@@ -17,8 +17,6 @@ const DEFAULT_GOODBYE = `
 │ • members : &size
 │ • admin : &admins
 │ • date : &date
-│ • TG PAIR : @queen_akuma_bot
-│ • WEB PAIR : https://inconnu-xd-v2.vercel.app
 ╰───────────────⭓`;
 
 const DEFAULT_WELCOME = `
@@ -34,8 +32,6 @@ const DEFAULT_WELCOME = `
 │ • members : &size
 │ • admin : &admins
 │ • date : &date
-│ • TG PAIR : @queen_akuma_bot
-│ • WEB PAIR : https://inconnu-xd-v2.vercel.app
 ╰───────────────⭓`;
 
 // URL de l'image du bot
@@ -99,30 +95,29 @@ async function getBotImageBuffer() {
 }
 
 async function sendWelcomeMsg(conn, groupJid, text, mentions = [], imgBuffer = null) {
-  try {
-    const messageOptions = {
-      text,
-      mentions,
-      contextInfo: {
-        forwardingScore: 999,
-        isForwarded: true,
-        forwardedNewsletterMessageInfo: {
-          newsletterJid: "120363403408693274@newsletter",
-          newsletterName: "𝙼𝙸𝙽𝙸 𝙸𝙽𝙲𝙾𝙽𝙽𝚄 𝚇𝙳",
-          serverMessageId: 6,
-        },
-      }
-    };
-
-    if (imgBuffer) {
-      messageOptions.image = imgBuffer;
-      messageOptions.caption = text;
+  const baseOptions = {
+    mentions,
+    contextInfo: {
+      forwardingScore: 999,
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: "120363403408693274@newsletter",
+        newsletterName: "𝙼𝙸𝙽𝙸 𝙸𝙽𝙲𝙾𝙽𝙽𝚄 𝚇𝙳",
+        serverMessageId: 6,
+      },
     }
+  };
 
+  try {
+    const messageOptions = imgBuffer 
+      ? { ...baseOptions, image: imgBuffer, caption: text }
+      : { ...baseOptions, text };
+    
     await conn.sendMessage(groupJid, messageOptions);
   } catch (err) {
     console.error("[groupupdate] sendWelcomeMsg primary error:", err?.message || err);
-    // fallback without newsletter context
+    
+    // Fallback sans contexte newsletter
     try {
       if (imgBuffer) {
         await conn.sendMessage(groupJid, { 
