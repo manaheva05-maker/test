@@ -28,6 +28,7 @@
     "browser-id3-writer": "^6.3.1",
     "chalk": "^5.6.2",
     "cheerio": "^1.1.2",
+    "mongoose": "^8.0.0",
     "crypto": "latest",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
