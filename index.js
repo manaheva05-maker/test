@@ -8,6 +8,8 @@ import initializeTelegramBot from "./bot.js";
 import { forceLoadPlugins } from "./lib/plugins.js";
 import eventlogger from "./lib/handier.js";
 import { manager, main, db } from "./lib/client.js";
+// Dans index.js, après les autres imports
+import mongoStore from "./lib/mongoStore.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
