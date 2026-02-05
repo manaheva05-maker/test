@@ -1,6 +1,23 @@
 import { Module } from "../lib/plugins.js";
 import { getTheme } from "../Themes/themes.js";
+import axios from "axios";
+
 const theme = getTheme();
+const BOT_IMAGE = "https://i.postimg.cc/XvsZgKCb/IMG-20250731-WA0527.jpg";
+
+async function getBotImageBuffer() {
+  try {
+    const res = await axios.get(BOT_IMAGE, {
+      responseType: "arraybuffer",
+      timeout: 20000,
+    });
+    return Buffer.from(res.data);
+  } catch (e) {
+    console.error("[tagall] getBotImageBuffer error:", e?.message || e);
+    return null;
+  }
+}
+
 Module({
   command: "tagall",
   package: "group",
@@ -14,83 +31,54 @@ Module({
     const groupMetadata = await conn.groupMetadata(from);
     const participants = groupMetadata.participants;
     const groupName = groupMetadata.subject || "Unknown Group";
-    let totalMembers = participants ? participants.length : 0;
-    if (totalMembers === 0)
-      return m.sendreply("❌ No members found in this group.");
-    const msgText = text?.trim() || "ATTENTION EVERYONE";
-    const emojis = [
-      "⚡",
-      "✨",
-      "🎖️",
-      "💎",
-      "🔱",
-      "💗",
-      "❤‍🩹",
-      "👻",
-      "🌟",
-      "🪄",
-      "🎋",
-      "🪼",
-      "🍿",
-      "👀",
-      "👑",
-      "🦋",
-      "🐋",
-      "🌻",
-      "🌸",
-      "🔥",
-      "🍉",
-      "🍧",
-      "🍨",
-      "🍦",
-      "🧃",
-      "🪀",
-      "🎾",
-      "🪇",
-      "🎲",
-      "🎡",
-      "🧸",
-      "🎀",
-      "🎈",
-      "🩵",
-      "♥️",
-      "🚩",
-      "🏳️‍🌈",
-      "🏖️",
-      "🔪",
-      "🎏",
-      "🫐",
-      "🍓",
-      "💋",
-      "🍄",
-      "🎐",
-      "🍇",
-      "🐍",
-      "🪻",
-      "🪸",
-      "💀",
-    ];
-    const getEmoji = () => emojis[Math.floor(Math.random() * emojis.length)];
-    // Separate admins and non-admins
+    
+    // Filter admins and non-admins
     const admins = participants.filter(
       (p) => p.admin === "admin" || p.admin === "superadmin"
     );
-    const others = participants.filter((p) => !admins.includes(p));
-    let tagText = `*▢ GROUP : ${groupName}*\n*▢ MEMBERS : ${totalMembers}*\n*▢ MESSAGE : ${msgText}*\n\n╭┈─「 ɦเ αℓℓ ƒɾเεɳ∂ร 🥰 」┈❍\n`;
- 
-    for (const p of others) {
-      tagText += `│${getEmoji()} ᩧ𝆺ྀི𝅥 @${p.id.split("@")[0]}\n`;
+    
+    const totalMembers = participants ? participants.length : 0;
+    const adminCount = admins.length;
+    
+    if (totalMembers === 0)
+      return m.sendreply("❌ No members found in this group.");
+    
+    const msgText = text?.trim() || "MINI INCONNU XD TAGALL";
+
+    // Build the text
+    let tagText = `╭───────────────⭓\n`;
+    tagText += `│ group : ${groupName}\n`;
+    tagText += `│ admin : ${adminCount}\n`;
+    tagText += `│ membres : ${totalMembers}\n`;
+    tagText += `│ ᴠᴇʀꜱɪᴏɴ : 2.0.0\n`;
+    tagText += `╰───────────────⭓\n`;
+    tagText += `> ${msgText}\n\n`;
+
+    // Add mentions for all participants
+    for (const p of participants) {
+      tagText += `@${p.id.split("@")[0]}\n`;
     }
-    tagText += `╰────────────❍`;
+
     const mentions = participants.map((p) => p.id);
-    await conn.sendMessage(
-      from,
-      {
-        text: tagText,
-        mentions,
-      },
-      { quoted: m.raw }
-    );
+    const botImageBuffer = await getBotImageBuffer();
+    
+    // Send message with image
+    const messageOptions = {
+      image: botImageBuffer,
+      caption: tagText,
+      mentions,
+      contextInfo: {
+        forwardingScore: 999,
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: "120363403408693274@newsletter",
+          newsletterName: "𝙼𝙸𝙽𝙸 𝙸𝙽𝙲𝙾𝙽𝙽𝚄 𝚇𝙳",
+          serverMessageId: 6,
+        },
+      }
+    };
+    
+    await conn.sendMessage(from, messageOptions, { quoted: m.raw });
   } catch (err) {
     console.error("tagall error:", err);
     m.sendreply("❌ An error occurred while tagging members.");
@@ -124,80 +112,40 @@ Module({
 
     const msgText = text?.trim() || "ATTENTION ADMINS";
 
-    const emojis = [
-      "⚡",
-      "✨",
-      "🎖️",
-      "💎",
-      "🔱",
-      "💗",
-      "❤‍🩹",
-      "👻",
-      "🌟",
-      "🪄",
-      "🎋",
-      "🪼",
-      "🍿",
-      "👀",
-      "👑",
-      "🦋",
-      "🐋",
-      "🌻",
-      "🌸",
-      "🔥",
-      "🍉",
-      "🍧",
-      "🍨",
-      "🍦",
-      "🧃",
-      "�",
-      "🎾",
-      "🪇",
-      "🎲",
-      "🎡",
-      "🧸",
-      "🎀",
-      "🎈",
-      "🩵",
-      "♥️",
-      "🚩",
-      "🏳️‍🌈",
-      "🏖️",
-      "🔪",
-      "🎏",
-      "🫐",
-      "🍓",
-      "💋",
-      "🍄",
-      "🎐",
-      "🍇",
-      "🐍",
-      "🪻",
-      "🪸",
-      "💀",
-    ];
+    // Build the text with image
+    let tagText = `╭───────────────⭓\n`;
+    tagText += `│ group : ${groupName}\n`;
+    tagText += `│ admin : ${totalAdmins}\n`;
+    tagText += `│ membres : ${participants.length}\n`;
+    tagText += `│ ᴠᴇʀꜱɪᴏɴ : 2.0.0\n`;
+    tagText += `╰───────────────⭓\n`;
+    tagText += `> ${msgText}\n\n`;
 
-    const getEmoji = () => emojis[Math.floor(Math.random() * emojis.length)];
-
-    let tagText = `*▢ GROUP : ${groupName}*\n*▢ ADMINS : ${totalAdmins}*\n*▢ MESSAGE : ${msgText}*\n\n╭┈─「 αℓℓ α∂ɱเɳร 👑 」┈❍\n`;
-
+    // Add admin mentions
     for (const admin of admins) {
-      const role = admin.admin === "superadmin" ? "🌟" : "👮";
-      tagText += `│${getEmoji()} @${admin.id.split("@")[0]}\n`;
+      tagText += `@${admin.id.split("@")[0]}\n`;
     }
 
-    tagText += "╰────────────❍";
-
     const mentions = admins.map((a) => a.id);
+    const botImageBuffer = await getBotImageBuffer();
+    
+    // Send message with image
+    const messageOptions = {
+      image: botImageBuffer,
+      caption: tagText,
+      mentions,
+      contextInfo: {
+        forwardingScore: 999,
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: "120363403408693274@newsletter",
+          newsletterName: "𝙼𝙸𝙽𝙸 𝙸𝙽𝙲𝙾𝙽𝙽𝚄 𝚇𝙳",
+          serverMessageId: 6,
+        },
+      }
+    };
 
-    await conn.sendMessage(
-      from,
-      {
-        text: tagText,
-        mentions,
-      },
-      { quoted: m.raw }
-    );
+    await conn.sendMessage(from, messageOptions, { quoted: m.raw });
   } catch (err) {
     console.error("admin tag error:", err);
     await m.sendReply("❌ An error occurred while tagging admins.");
@@ -221,15 +169,27 @@ Module({
     const shuffled = participants.sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, Math.min(count, participants.length));
 
-    let tagText = `🎲 *Random ${count} Members*\n\n`;
-    const mentions = [];
+    let tagText = `╭───────────────⭓\n`;
+    tagText += `│ group : ${m.groupName || "Unknown"}\n`;
+    tagText += `│ selected : ${selected.length}\n`;
+    tagText += `│ total : ${participants.length}\n`;
+    tagText += `│ ᴠᴇʀꜱɪᴏɴ : 2.0.0\n`;
+    tagText += `╰───────────────⭓\n`;
+    tagText += `> RANDOM TAG\n\n`;
 
+    const mentions = [];
     for (const p of selected) {
-      tagText += `✨ @${p.id.split("@")[0]}\n`;
+      tagText += `@${p.id.split("@")[0]}\n`;
       mentions.push(p.id);
     }
 
-    await m.send({ text: tagText, mentions });
+    const botImageBuffer = await getBotImageBuffer();
+    
+    await m.send({ 
+      image: botImageBuffer, 
+      caption: tagText, 
+      mentions 
+    });
   } catch (err) {
     await m.reply("❌ Error: " + err.message);
   }
@@ -249,8 +209,14 @@ Module({
   try {
     const message = text || "📢 Everyone has been tagged!";
     const mentions = m.groupParticipants.map((p) => p.id);
-
-    await m.send({ text: message, mentions });
+    
+    const botImageBuffer = await getBotImageBuffer();
+    
+    await m.send({ 
+      image: botImageBuffer, 
+      caption: message, 
+      mentions 
+    });
     await m.react("👻");
   } catch (err) {
     await m.reply("❌ Error: " + err.message);
