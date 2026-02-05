@@ -1,14 +1,13 @@
-// index.js
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import fs from "fs-extra";
 import { fileURLToPath } from "url";
-import initializeTelegramBot from "./bot.js";
+import initializeTelegramBot from "./inconnu.js";
 import { forceLoadPlugins } from "./lib/plugins.js";
+//import { createSockAndStart, attachHandlersToSock } from "./lib/client.js";
 import eventlogger from "./lib/handier.js";
 import { manager, main, db } from "./lib/client.js";
-import mongoStore from "./lib/mongoStore.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -154,7 +153,6 @@ app.get("/", (req, res) =>
 process.on("SIGINT", async () => {
   await db.flush();
   await db.close();
-  await mongoStore.close();
   process.exit(0);
 });
 // -- startup
@@ -162,9 +160,6 @@ const PORT = process.env.PORT || 3000;
 
 (async function init() {
   try {
-    // Connecter à MongoDB
-    await mongoStore.connect();
-    
     // ensure lib main is initialized (attaches events, loads plugins) but do NOT auto-start if you want full control
     await main({ autoStartAll: false });
 
